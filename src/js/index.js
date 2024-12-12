@@ -13,7 +13,7 @@ const songsContainer = document.getElementById('songs');
 const loopButtonIcon = document.querySelector('#loopButton i');
 const shuffleButtonIcon = document.querySelector('#shuffleButton i');
 
-const API = "http://informatica.iesalbarregas.com:7007";
+const API = "http://informatica.iesalbarregas.com:7008";
 const songsEndPoint = API + "/songs";
 const uploadEndPoint = API + "/upload";
 
@@ -115,7 +115,7 @@ function createSongItem(song) {
         songsContainer.removeChild(songItem);
 
         if (favorites.length === 0) {
-          songsContainer.innerHTML = "<p>No tienes canciones favoritas.</p>";
+          songsContainer.innerHTML = "<p>You don't have favorite songs, add some to listen to whenever you want.</p>";
         }
       }
     }
@@ -128,6 +128,12 @@ function createSongItem(song) {
 
   return songItem;
 }
+
+const favoriteSongsButton = document.getElementById("favoriteSongsButton");
+
+favoriteSongsButton.addEventListener("click", () => {
+  loadFavorites();
+});
 
 let currentSongItem = null;
 
@@ -255,24 +261,25 @@ progressBar.addEventListener('mousedown', (e) => {
   const rect = progressBar.getBoundingClientRect();
   const clickX = e.clientX - rect.left;
   const progress = (clickX / rect.width) * 100;
-  progressBar.value = progress;
-  updateCurrentTime(progress);
-
-  if (currentAudio != null) {
-    currentAudio.currentTime = (progress / 100) * currentAudio.duration;
+  if (isFinite(progress)) {
+    progressBar.value = progress;
+    updateCurrentTime(progress);
+    if (currentAudio != null && isFinite(currentAudio.duration)) {
+      currentAudio.currentTime = (progress / 100) * currentAudio.duration;
+    }
   }
   const handleMouseMove = (e) => {
     const clickX = e.clientX - rect.left;
     const progress = (clickX / rect.width) * 100;
-    progressBar.value = progress;
-    updateCurrentTime(progress);
-    if (currentAudio != null) {
-      currentAudio.currentTime = (progress / 100) * currentAudio.duration;
+    if (isFinite(progress)) {
+      progressBar.value = progress;
+      updateCurrentTime(progress);
+      if (currentAudio != null && isFinite(currentAudio.duration)) {
+        currentAudio.currentTime = (progress / 100) * currentAudio.duration;
+      }
     }
-  }
-
+  };
   window.addEventListener('mousemove', handleMouseMove);
-
   window.addEventListener('mouseup', () => {
     window.removeEventListener('mousemove', handleMouseMove);
   });
@@ -384,29 +391,6 @@ addQueueForm.addEventListener("submit", function (e) {
     });
 });
 
-const volumeRange = document.getElementById("volume");
-const volumenContainer = document.querySelector(".volume");
-volumeRange.addEventListener('input', (e) => {
-  if (currentAudio != null) {
-    currentAudio.volume = e.target.value;
-  }
-  if (e.target.value == 0) {
-    volumenContainer.firstElementChild.className = "";
-    volumenContainer.firstElementChild.classList.add("bx", "bxs-volume-mute");
-  } else if (e.target.value <= 0.50) {
-    volumenContainer.firstElementChild.className = "";
-    volumenContainer.firstElementChild.classList.add("bx", "bxs-volume-low");
-  } else {
-    volumenContainer.firstElementChild.className = "";
-    volumenContainer.firstElementChild.classList.add("bx", "bxs-volume-full");
-  }
-})
-
-volumeRange.addEventListener('input', function () {
-  const value = (this.value - this.min) / (this.max - this.min) * 100;
-  this.style.setProperty('--range-progress', `${value}%`);
-});
-
 function playNextSong() {
   if (isLooping) {
     currentAudio.currentTime = 0;
@@ -512,18 +496,12 @@ function playRandomSong() {
   selectSong(randomSong);
 }
 
-const favoriteSongsButton = document.getElementById("favoriteSongsButton");
-
-favoriteSongsButton.addEventListener("click", () => {
-  loadFavorites();
-});
-
 function loadFavorites() {
   songsContainer.innerHTML = "";
   songsContainer.classList.add('favorites-view');
   favorites = JSON.parse(localStorage.getItem('favorites')) || [];
   if (favorites.length === 0) {
-    songsContainer.innerHTML = "<p>No tienes canciones favoritas.</p>";
+    songsContainer.innerHTML = "<p>You don't have favorite songs, add some to listen to whenever you want.</p>";
     return;
   }
   favorites.forEach(song => {
@@ -546,3 +524,26 @@ function loadAllSongs() {
     songsContainer.appendChild(songItem);
   });
 }
+
+const volumeRange = document.getElementById("volume");
+const volumenContainer = document.querySelector(".volume");
+volumeRange.addEventListener('input', (e) => {
+  if (currentAudio != null) {
+    currentAudio.volume = e.target.value;
+  }
+  if (e.target.value == 0) {
+    volumenContainer.firstElementChild.className = "";
+    volumenContainer.firstElementChild.classList.add("bx", "bxs-volume-mute");
+  } else if (e.target.value <= 0.50) {
+    volumenContainer.firstElementChild.className = "";
+    volumenContainer.firstElementChild.classList.add("bx", "bxs-volume-low");
+  } else {
+    volumenContainer.firstElementChild.className = "";
+    volumenContainer.firstElementChild.classList.add("bx", "bxs-volume-full");
+  }
+})
+
+volumeRange.addEventListener('input', function () {
+  const value = (this.value - this.min) / (this.max - this.min) * 100;
+  this.style.setProperty('--range-progress', `${value}%`);
+});

@@ -489,7 +489,7 @@ details p:hover {
   color: var(--white);
 }
 
-.song-item .play-song-button {
+.song-item .playSongButton {
   opacity: 0;
   transition: opacity 0.2s linear;
 }
