@@ -1,17 +1,18 @@
 const songList = document.querySelector('.main');
 const currentSongLogo = document.querySelector('.currentSongLogo');
 const playButton = document.querySelector('#playButton');
-const pauseTopButton = document.querySelector('.header2 button');
-const progressBar = document.querySelector('.progressBar');
 const currentTime = document.querySelector('.time.current');
+const songsContainer = document.getElementById('songs');
+const loopButtonIcon = document.querySelector('#loopButton i');
+const shuffleButtonIcon = document.querySelector('#shuffleButton i');
 const totalTime = document.querySelector('.time.total');
 const modalContainer = document.getElementById('modal');
 const addQueueButton = document.getElementById('addToList');
 const addQueueForm = document.getElementById('addToListForm');
 const uploadButton = document.getElementById("upload-button");
-const songsContainer = document.getElementById('songs');
-const loopButtonIcon = document.querySelector('#loopButton i');
-const shuffleButtonIcon = document.querySelector('#shuffleButton i');
+const pauseTopButton = document.querySelector('.header2 button');
+const progressBar = document.querySelector('.progressBar');
+
 
 const API = "http://informatica.iesalbarregas.com:7008";
 const songsEndPoint = API + "/songs";
@@ -24,10 +25,10 @@ const options = {
 let currentSong = null;
 let currentAudio = null;
 let isPlaying = false;
-let songsList = [];
-let currentSongIndex = 0;
 let isLooping = false;
 let isShuffle = false;
+let songsList = [];
+let currentSongIndex = 0;
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
 fetch(songsEndPoint, options)
@@ -134,6 +135,35 @@ const favoriteSongsButton = document.getElementById("favoriteSongsButton");
 favoriteSongsButton.addEventListener("click", () => {
   loadFavorites();
 });
+
+function loadFavorites() {
+  songsContainer.innerHTML = "";
+  songsContainer.classList.add('favorites-view');
+  favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  if (favorites.length === 0) {
+    songsContainer.innerHTML = "<p>You don't have favorite songs, add some to listen to whenever you want.</p>";
+    return;
+  }
+  favorites.forEach(song => {
+    const songItem = createSongItem(song);
+    songsContainer.appendChild(songItem);
+  });
+}
+
+const allSongsButton = document.getElementById("allSongsButton");
+allSongsButton.addEventListener('click', () => {
+  loadAllSongs();
+})
+
+function loadAllSongs() {
+  songsContainer.innerHTML = "";
+  songsContainer.classList.remove('favorites-view');
+
+  songsList.forEach(song => {
+    const songItem = createSongItem(song);
+    songsContainer.appendChild(songItem);
+  });
+}
 
 let currentSongItem = null;
 
@@ -494,35 +524,6 @@ function playRandomSong() {
 
   const randomSong = songsList[randomIndex];
   selectSong(randomSong);
-}
-
-function loadFavorites() {
-  songsContainer.innerHTML = "";
-  songsContainer.classList.add('favorites-view');
-  favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-  if (favorites.length === 0) {
-    songsContainer.innerHTML = "<p>You don't have favorite songs, add some to listen to whenever you want.</p>";
-    return;
-  }
-  favorites.forEach(song => {
-    const songItem = createSongItem(song);
-    songsContainer.appendChild(songItem);
-  });
-}
-
-const allSongsButton = document.getElementById("allSongsButton");
-allSongsButton.addEventListener('click', () => {
-  loadAllSongs();
-})
-
-function loadAllSongs() {
-  songsContainer.innerHTML = "";
-  songsContainer.classList.remove('favorites-view');
-
-  songsList.forEach(song => {
-    const songItem = createSongItem(song);
-    songsContainer.appendChild(songItem);
-  });
 }
 
 const volumeRange = document.getElementById("volume");
