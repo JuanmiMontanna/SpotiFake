@@ -155,7 +155,7 @@ aside {
 
 h1 {
   color: var(--white);
-  font-size: 32px;
+  font-size: calc(var(--default-size) * 8);
   font-weight: bold;
 }
 
@@ -217,9 +217,9 @@ h1 {
   grid-template-columns: 1fr 4fr 4fr 1fr 1fr;
   display: grid;
   align-items: center;
-  padding: 8px;
+  padding: calc(var(--default-size) * 2);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  height: 48px;
+  height: calc(var(--default-size) * 12);
   cursor: pointer;
 }
 
@@ -301,7 +301,7 @@ h1 {
 
 .progressBar {
   flex-grow: 1;
-  height: 8px;
+  height: calc(var(--default-size) * 2);
   background: var(--color-text-secondary);
   border-radius: var(--default-size);
   overflow: hidden;
@@ -460,7 +460,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 .errorMessage {
   position: relative;
   color: red;
-  left: 12px;
+  left: calc(var(--default-size) * 3);
 }
 
 .progressBar::-webkit-progress-value {
@@ -471,7 +471,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   background-color: var(--color-primary);
   border-radius: 50px;
   padding: 5px;
-  font-size: 24px;
+  font-size: calc(var(--default-size) * 6);
 }
 
 details {
@@ -499,5 +499,5 @@ details p:hover {
 }
 
 .bx-time-five {
-  font-size: 24px;
+  font-size: calc(var(--default-size) * 6);
 }
