@@ -31,77 +31,84 @@
         <div class="currentSongLogo"></div>
       </aside>
       <div class="main">
-        <div class="header">
-          <div class="search">
-            <i class="bx bx-search-alt"></i>
-            <input
-              type="search"
-              class="searchBar"
-              placeholder="Search"
-              id="search"
-              name="search"
-            />
-          </div>
-          <div id="user">
-            <img id="logo" src="./src/image/logo.jpg" alt="Logo" />
-            <p>Juanmi</p>
-          </div>
-        </div>
-        <div class="header2">
-          <h1>Music</h1>
-          <div id="modal-header2-container">
-            <div class="buttonsTop">
-              <button id="pauseAndPlayButton">PAUSE</button>
-              <button id="addToList" class="toolsButton">
-                <i class="bx bxs-add-to-queue"></i>
-              </button>
+        <div class="fullHeader">
+          <div class="header">
+            <div class="search">
+              <i class="bx bx-search-alt"></i>
+              <input
+                type="search"
+                class="searchBar"
+                placeholder="Search"
+                id="search"
+                name="search"
+              />
             </div>
-            <div id="modal" class="hidden">
-              <form id="addToListForm" method="post">
-                <button id="closeButton"><i class="bx bx-x"></i></button>
-                <div>
-                  <label for="songFile">Añadir nueva canción</label>
-                  <input type="file" accept=".mp3" id="songFile" name="music" />
-                  <span id="errorFile" class="errorMessage"></span>
-                </div>
-                <div>
-                  <label for="songTitle">Título</label>
+            <div id="user">
+              <img id="logo" src="./src/image/logo.jpg" alt="Logo" />
+              <p>Juanmi</p>
+            </div>
+          </div>
+          <div class="header2">
+            <h1>Music</h1>
+            <div id="modal-header2-container">
+              <div class="buttonsTop">
+                <button id="pauseAndPlayButton">PAUSE</button>
+                <button id="addToList" class="addButton">
+                  <i class="bx bxs-add-to-queue"></i>
+                </button>
+              </div>
+              <div id="modal" class="hidden">
+                <form id="addToListForm" method="post">
+                  <button id="closeButton"><i class="bx bx-x"></i></button>
+                  <div>
+                    <label for="songFile">Añadir nueva canción</label>
+                    <input
+                      type="file"
+                      accept=".mp3"
+                      id="songFile"
+                      name="music"
+                    />
+                    <span id="errorFile" class="errorMessage"></span>
+                  </div>
+                  <div>
+                    <label for="songTitle">Título</label>
+                    <input
+                      type="text"
+                      name="title"
+                      id="songTitle"
+                      maxlength="20"
+                    />
+                    <span id="errorTitle" class="errorMessage"></span>
+                  </div>
+                  <div>
+                    <label for="songArtist">Autor</label>
+                    <input
+                      type="text"
+                      name="artist"
+                      id="songArtist"
+                      maxlength="20"
+                    />
+                    <span id="errorArtist" class="errorMessage"></span>
+                  </div>
+                  <div>
+                    <label for="songImage">Imagen de portada</label>
+                    <input
+                      type="file"
+                      accept=".png, .jpg"
+                      id="songImage"
+                      name="cover"
+                    />
+                    <span id="errorCover" class="errorMessage"></span>
+                  </div>
                   <input
-                    type="text"
-                    name="title"
-                    id="songTitle"
-                    maxlength="20"
+                    type="submit"
+                    value="Subir"
+                    id="upload-button"
+                    name="upload-button"
+                    class="green-button"
                   />
-                  <span id="errorTitle" class="errorMessage"></span>
-                </div>
-                <div>
-                  <label for="songArtist">Autor</label>
-                  <input
-                    type="text"
-                    name="artist"
-                    id="songArtist"
-                    maxlength="20"
-                  />
-                  <span id="errorArtist" class="errorMessage"></span>
-                </div>
-                <div>
-                  <label for="songImage">Imagen de portada</label>
-                  <input
-                    type="file"
-                    accept=".png, .jpg"
-                    id="songImage"
-                    name="cover"
-                  />
-                  <span id="errorCover" class="errorMessage"></span>
-                </div>
-                <input
-                  type="submit"
-                  value="Subir"
-                  id="upload-button"
-                  name="upload-button"
-                  class="green-button"
-                />
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>

@@ -72,7 +72,7 @@ function createSongItem(song) {
   songItem.classList.add('song-item');
 
   const playSongButton = document.createElement('span');
-  playSongButton.classList.add("play-song-button");
+  playSongButton.classList.add("playSongButton");
   playSongButton.innerHTML = `<i class="bx bx-play play-icon"></i>`;
 
   const title = document.createElement('span');
